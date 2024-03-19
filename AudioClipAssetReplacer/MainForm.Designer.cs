@@ -123,7 +123,7 @@
             audioGroupBox.Controls.Add(audioGridView);
             audioGroupBox.Location = new Point(12, 31);
             audioGroupBox.Name = "audioGroupBox";
-            audioGroupBox.Size = new Size(743, 352);
+            audioGroupBox.Size = new Size(743, 404);
             audioGroupBox.TabIndex = 1;
             audioGroupBox.TabStop = false;
             audioGroupBox.Text = "Select your audio asset";
@@ -146,7 +146,7 @@
             audioGridView.RowHeadersWidth = 51;
             audioGridView.RowTemplate.Height = 29;
             audioGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            audioGridView.Size = new Size(737, 326);
+            audioGridView.Size = new Size(737, 378);
             audioGridView.TabIndex = 2;
             // 
             // NameColumn
@@ -188,7 +188,7 @@
             // 
             splitContainer1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             splitContainer1.IsSplitterFixed = true;
-            splitContainer1.Location = new Point(12, 389);
+            splitContainer1.Location = new Point(12, 441);
             splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -233,14 +233,15 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(767, 455);
+            ClientSize = new Size(767, 507);
             Controls.Add(splitContainer1);
             Controls.Add(audioGroupBox);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MainForm";
             ShowIcon = false;
-            Text = "AudioClipAssetReplacer";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "AudioClipAssetReplacer v{0}";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             audioGroupBox.ResumeLayout(false);

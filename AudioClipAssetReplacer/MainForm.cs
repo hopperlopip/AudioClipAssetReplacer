@@ -5,7 +5,12 @@ namespace AudioClipAssetReplacer
 {
     public partial class MainForm : Form
     {
+        bool modified = false;
+        string initFormTitle;
+
         const string ERROR_TITLE = "Error";
+        const string QUESTION_TITLE = "Question";
+
         AssetsManager manager = new AssetsManager();
         AssetsFileInstance fileInstance;
         AssetsFile assetsFile;
@@ -17,6 +22,33 @@ namespace AudioClipAssetReplacer
         public MainForm()
         {
             InitializeComponent();
+            Text = string.Format(Text, Application.ProductVersion);
+            initFormTitle = Text;
+            FormClosing += MainForm_FormClosing;
+        }
+
+        private void MainForm_FormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (modified == true)
+            {
+                switch (MessageBox.Show("Would you like to save changes before exit?", QUESTION_TITLE, MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question))
+                {
+                    case DialogResult.Yes:
+                        SaveAssetsFile(assetsFile, assetsPath);
+                        break;
+                    case DialogResult.No:
+                        break;
+                    case DialogResult.Cancel:
+                        e.Cancel = true;
+                        break;
+                }
+            }
+        }
+
+        enum ModifiedState
+        {
+            Modified,
+            Saved,
         }
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
@@ -26,6 +58,7 @@ namespace AudioClipAssetReplacer
                 assetsPath = openAssetsDialog.FileName;
                 LoadAssetsFile(assetsPath);
             }
+            SetModifiedState(ModifiedState.Saved);
         }
 
         private void LoadAssetsFile(string assetsPath)
@@ -64,6 +97,20 @@ namespace AudioClipAssetReplacer
                 {
                     audioGridView.Rows[savedSelectedRowIndex].Selected = true;
                 }
+            }
+        }
+
+        private void SetModifiedState(ModifiedState state)
+        {
+            if (state == ModifiedState.Modified)
+            {
+                modified = true;
+                Text = initFormTitle + $" - {Path.GetFileName(assetsPath)} - Modified";
+            }
+            else if (state == ModifiedState.Saved)
+            {
+                modified = false;
+                Text = initFormTitle + $" - {Path.GetFileName(assetsPath)}";
             }
         }
 
@@ -185,6 +232,7 @@ namespace AudioClipAssetReplacer
                 long pathID = Convert.ToInt64(audioGridView.SelectedRows[0].Cells[1].Value);
                 ReplaceFsbData(pathID);
                 UpdateAssetsFileList();
+                SetModifiedState(ModifiedState.Modified);
             }
         }
 
@@ -203,20 +251,32 @@ namespace AudioClipAssetReplacer
                 long size = new FileInfo(openFsbDialog.FileName).Length;
                 LinkFsbData(pathID, relFsbPath, size);
                 UpdateAssetsFileList();
+                SetModifiedState(ModifiedState.Modified);
             }
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (assetsFile == null)
+            {
+                MessageBox.Show("Assets file is not loaded.", ERROR_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             SaveAssetsFile(assetsFile, assetsPath);
             if (resourceFile != null)
             {
                 File.WriteAllBytes(resourcePath, resourceFile);
             }
+            SetModifiedState(ModifiedState.Saved);
         }
 
         private void saveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (assetsFile == null)
+            {
+                MessageBox.Show("Assets file is not loaded.", ERROR_TITLE, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
             if (saveAssetsDialog.ShowDialog() == DialogResult.Cancel)
             {
                 return;
@@ -230,6 +290,7 @@ namespace AudioClipAssetReplacer
                 File.WriteAllBytes(saveResourceDialog.FileName, resourceFile);
             }
             SaveAssetsFile(assetsFile, saveAssetsDialog.FileName);
+            SetModifiedState(ModifiedState.Saved);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
