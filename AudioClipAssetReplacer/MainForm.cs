@@ -112,13 +112,23 @@ namespace AudioClipAssetReplacer
                 MessageBox.Show($"The resource file ({resourceName}) doesn't exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
             }
-            byte[] resourceBytes = File.ReadAllBytes(resourcePath);
+            byte[] resourceBytes;
+            if (Path.GetFileName(resourcePath) != resourceName || resourceFile == null)
+            {
+                resourceBytes = File.ReadAllBytes(resourcePath);
+            }
+            else
+            {
+                resourceBytes = resourceFile;
+            }
             MemoryStream memoryStream = new MemoryStream();
             BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
+
+            //MessageBox.Show($"audioOffset: {audioOffset}\r\naudioOffset + dataSize: {audioOffset + dataSize}\r\ndataSize: {dataSize}\r\nresourceBytes.Length - Convert.ToInt32(audioOffset + dataSize): {resourceBytes.Length - Convert.ToInt32(audioOffset + dataSize)}");
+
             binaryWriter.Write(resourceBytes, 0, Convert.ToInt32(audioOffset));
-            binaryWriter.Write(resourceBytes, Convert.ToInt32(audioOffset + dataSize), resourceBytes.Length - Convert.ToInt32(audioOffset + dataSize));
-            binaryWriter.BaseStream.Position = Convert.ToInt64(audioOffset);
             binaryWriter.Write(fsbFileData);
+            binaryWriter.Write(resourceBytes, Convert.ToInt32(audioOffset + dataSize), resourceBytes.Length - Convert.ToInt32(audioOffset + dataSize));
             resourceFile = memoryStream.ToArray();
             audioBase["m_Resource.m_Size"].AsULong = Convert.ToUInt64(fsbFileData.LongLength);
             audioInfo.SetNewData(audioBase);
@@ -130,6 +140,10 @@ namespace AudioClipAssetReplacer
                     long currentPathID = Convert.ToInt64(audioGridView.Rows[i].Cells[1].Value);
                     AssetTypeValueField currentAudioBase = manager.GetBaseField(fileInstance, currentPathID);
                     AssetFileInfo currentAudioInfo = assetsFile.GetAssetInfo(currentPathID);
+                    if (currentAudioBase["m_Resource.m_Source"].AsString != resourceName)
+                    {
+                        break;
+                    }
                     long offsetAfterWriting = fsbFileData.LongLength - Convert.ToInt64(dataSize);
                     if (offsetAfterWriting > 0)
                     {
