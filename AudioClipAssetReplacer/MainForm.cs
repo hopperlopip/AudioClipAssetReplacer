@@ -109,20 +109,14 @@ namespace AudioClipAssetReplacer
             resourcePath = currentDir + resourceName;
             if (!File.Exists(resourcePath))
             {
-                MessageBox.Show("The resource file (" + resourceName + ") doesn't exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
+                MessageBox.Show($"The resource file ({resourceName}) doesn't exists.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Hand);
                 return;
             }
-            List<byte> resourceBytes = File.ReadAllBytes(resourcePath).ToList();
-            resourceBytes.RemoveRange(Convert.ToInt32(audioOffset), Convert.ToInt32(dataSize));
+            byte[] resourceBytes = File.ReadAllBytes(resourcePath);
             MemoryStream memoryStream = new MemoryStream();
             BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
-            binaryWriter.Write(resourceBytes.ToArray());
-
-
-            File.WriteAllBytes(".\\Testing.resource", memoryStream.ToArray());
-            MessageBox.Show("Done");
-
-
+            binaryWriter.Write(resourceBytes, 0, Convert.ToInt32(audioOffset));
+            binaryWriter.Write(resourceBytes, Convert.ToInt32(audioOffset + dataSize), resourceBytes.Length - Convert.ToInt32(audioOffset + dataSize));
             binaryWriter.BaseStream.Position = Convert.ToInt64(audioOffset);
             binaryWriter.Write(fsbFileData);
             resourceFile = memoryStream.ToArray();
