@@ -117,8 +117,12 @@ namespace AudioClipAssetReplacer
             MemoryStream memoryStream = new MemoryStream();
             BinaryWriter binaryWriter = new BinaryWriter(memoryStream);
             binaryWriter.Write(resourceBytes.ToArray());
+
+
             File.WriteAllBytes(".\\Testing.resource", memoryStream.ToArray());
             MessageBox.Show("Done");
+
+
             binaryWriter.BaseStream.Position = Convert.ToInt64(audioOffset);
             binaryWriter.Write(fsbFileData);
             resourceFile = memoryStream.ToArray();

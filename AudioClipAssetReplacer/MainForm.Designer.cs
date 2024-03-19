@@ -39,6 +39,11 @@
             saveAssetsDialog = new SaveFileDialog();
             audioGroupBox = new GroupBox();
             audioGridView = new DataGridView();
+            NameColumn = new DataGridViewTextBoxColumn();
+            PathIDColumn = new DataGridViewTextBoxColumn();
+            OffsetColumn = new DataGridViewTextBoxColumn();
+            SizeColumn = new DataGridViewTextBoxColumn();
+            SourceColumn = new DataGridViewTextBoxColumn();
             splitContainer1 = new SplitContainer();
             replaceButton = new Button();
             linkButton = new Button();
@@ -72,28 +77,28 @@
             // openToolStripMenuItem
             // 
             openToolStripMenuItem.Name = "openToolStripMenuItem";
-            openToolStripMenuItem.Size = new Size(224, 26);
+            openToolStripMenuItem.Size = new Size(152, 26);
             openToolStripMenuItem.Text = "Open";
             openToolStripMenuItem.Click += openToolStripMenuItem_Click;
             // 
             // saveToolStripMenuItem
             // 
             saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            saveToolStripMenuItem.Size = new Size(224, 26);
+            saveToolStripMenuItem.Size = new Size(152, 26);
             saveToolStripMenuItem.Text = "Save";
             saveToolStripMenuItem.Click += saveToolStripMenuItem_Click;
             // 
             // saveAsToolStripMenuItem
             // 
             saveAsToolStripMenuItem.Name = "saveAsToolStripMenuItem";
-            saveAsToolStripMenuItem.Size = new Size(224, 26);
+            saveAsToolStripMenuItem.Size = new Size(152, 26);
             saveAsToolStripMenuItem.Text = "Save As...";
             saveAsToolStripMenuItem.Click += saveAsToolStripMenuItem_Click;
             // 
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(224, 26);
+            exitToolStripMenuItem.Size = new Size(152, 26);
             exitToolStripMenuItem.Text = "Exit";
             exitToolStripMenuItem.Click += exitToolStripMenuItem_Click;
             // 
@@ -125,14 +130,59 @@
             // 
             // audioGridView
             // 
+            audioGridView.AllowUserToAddRows = false;
+            audioGridView.AllowUserToDeleteRows = false;
+            audioGridView.AllowUserToResizeRows = false;
+            audioGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            audioGridView.BackgroundColor = SystemColors.Control;
             audioGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            audioGridView.Columns.AddRange(new DataGridViewColumn[] { NameColumn, PathIDColumn, OffsetColumn, SizeColumn, SourceColumn });
             audioGridView.Dock = DockStyle.Fill;
             audioGridView.Location = new Point(3, 23);
+            audioGridView.MultiSelect = false;
             audioGridView.Name = "audioGridView";
+            audioGridView.ReadOnly = true;
+            audioGridView.RowHeadersVisible = false;
             audioGridView.RowHeadersWidth = 51;
             audioGridView.RowTemplate.Height = 29;
+            audioGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             audioGridView.Size = new Size(737, 326);
             audioGridView.TabIndex = 2;
+            // 
+            // NameColumn
+            // 
+            NameColumn.HeaderText = "Name";
+            NameColumn.MinimumWidth = 6;
+            NameColumn.Name = "NameColumn";
+            NameColumn.ReadOnly = true;
+            // 
+            // PathIDColumn
+            // 
+            PathIDColumn.HeaderText = "PathID";
+            PathIDColumn.MinimumWidth = 6;
+            PathIDColumn.Name = "PathIDColumn";
+            PathIDColumn.ReadOnly = true;
+            // 
+            // OffsetColumn
+            // 
+            OffsetColumn.HeaderText = "Offset";
+            OffsetColumn.MinimumWidth = 6;
+            OffsetColumn.Name = "OffsetColumn";
+            OffsetColumn.ReadOnly = true;
+            // 
+            // SizeColumn
+            // 
+            SizeColumn.HeaderText = "Size";
+            SizeColumn.MinimumWidth = 6;
+            SizeColumn.Name = "SizeColumn";
+            SizeColumn.ReadOnly = true;
+            // 
+            // SourceColumn
+            // 
+            SourceColumn.HeaderText = "Source";
+            SourceColumn.MinimumWidth = 6;
+            SourceColumn.Name = "SourceColumn";
+            SourceColumn.ReadOnly = true;
             // 
             // splitContainer1
             // 
@@ -220,5 +270,10 @@
         private Button replaceButton;
         private Button linkButton;
         private SaveFileDialog saveResourceDialog;
+        private DataGridViewTextBoxColumn NameColumn;
+        private DataGridViewTextBoxColumn PathIDColumn;
+        private DataGridViewTextBoxColumn OffsetColumn;
+        private DataGridViewTextBoxColumn SizeColumn;
+        private DataGridViewTextBoxColumn SourceColumn;
     }
 }
