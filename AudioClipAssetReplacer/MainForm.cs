@@ -104,8 +104,11 @@ namespace AudioClipAssetReplacer
                 if (audioGridView.Rows.Count != 0)
                 {
                     audioGridView.Rows[savedSelectedRowIndex].Selected = true;
-                    PropertyInfo verticalOffset = audioGridView.GetType().GetProperty("VerticalOffset", BindingFlags.NonPublic | BindingFlags.Instance);
-                    verticalOffset.SetValue(this.audioGridView, savedScroll, null);
+                    PropertyInfo? verticalOffset = audioGridView.GetType().GetProperty("VerticalOffset", BindingFlags.NonPublic | BindingFlags.Instance);
+                    if (verticalOffset != null && savedScroll != 0)
+                    {
+                        verticalOffset.SetValue(this.audioGridView, savedScroll, null);
+                    }
                 }
             }
         }
