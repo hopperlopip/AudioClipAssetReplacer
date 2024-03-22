@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             menuStrip1 = new MenuStrip();
             fileToolStripMenuItem = new ToolStripMenuItem();
             openToolStripMenuItem = new ToolStripMenuItem();
@@ -48,6 +49,7 @@
             replaceButton = new Button();
             linkButton = new Button();
             saveResourceDialog = new SaveFileDialog();
+            toolTip1 = new ToolTip(components);
             menuStrip1.SuspendLayout();
             audioGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)audioGridView).BeginInit();
@@ -276,5 +278,6 @@
         private DataGridViewTextBoxColumn OffsetColumn;
         private DataGridViewTextBoxColumn SizeColumn;
         private DataGridViewTextBoxColumn SourceColumn;
+        private ToolTip toolTip1;
     }
 }

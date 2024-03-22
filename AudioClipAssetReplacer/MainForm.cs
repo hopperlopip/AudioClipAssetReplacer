@@ -1,5 +1,6 @@
 using AssetsTools.NET.Extra;
 using AssetsTools.NET;
+using System.Reflection;
 
 namespace AudioClipAssetReplacer
 {
@@ -25,6 +26,7 @@ namespace AudioClipAssetReplacer
             Text = string.Format(Text, Application.ProductVersion);
             initFormTitle = Text;
             FormClosing += MainForm_FormClosing;
+            toolTip1.SetToolTip(linkButton, "You can link your audio asset to your FSB file.\r\nRemember, FSB file must be contained inside a folder where your assets file located because\r\nit sets not an absolute path to your FSB, it sets an relative path.\r\n");
         }
 
         private void MainForm_FormClosing(object? sender, FormClosingEventArgs e)
@@ -53,11 +55,16 @@ namespace AudioClipAssetReplacer
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (openAssetsDialog.ShowDialog() != DialogResult.Cancel)
+            if (openAssetsDialog.ShowDialog() == DialogResult.Cancel)
             {
-                assetsPath = openAssetsDialog.FileName;
-                LoadAssetsFile(assetsPath);
+                return;
             }
+            assetsPath = openAssetsDialog.FileName;
+            if (assetsFile != null)
+            {
+                manager.UnloadAll();
+            }
+            LoadAssetsFile(assetsPath);
             SetModifiedState(ModifiedState.Saved);
         }
 
@@ -76,6 +83,7 @@ namespace AudioClipAssetReplacer
             if (assetsFile != null)
             {
                 int savedSelectedRowIndex = 0;
+                int savedScroll = audioGridView.VerticalScrollingOffset;
                 if (audioGridView.SelectedRows.Count != 0)
                 {
                     savedSelectedRowIndex = audioGridView.SelectedRows[0].Index;
@@ -96,6 +104,8 @@ namespace AudioClipAssetReplacer
                 if (audioGridView.Rows.Count != 0)
                 {
                     audioGridView.Rows[savedSelectedRowIndex].Selected = true;
+                    PropertyInfo verticalOffset = audioGridView.GetType().GetProperty("VerticalOffset", BindingFlags.NonPublic | BindingFlags.Instance);
+                    verticalOffset.SetValue(this.audioGridView, savedScroll, null);
                 }
             }
         }
