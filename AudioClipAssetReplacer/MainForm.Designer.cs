@@ -38,7 +38,6 @@
             openAssetsDialog = new OpenFileDialog();
             openFsbDialog = new OpenFileDialog();
             saveAssetsDialog = new SaveFileDialog();
-            audioGroupBox = new GroupBox();
             audioGridView = new DataGridView();
             NameColumn = new DataGridViewTextBoxColumn();
             PathIDColumn = new DataGridViewTextBoxColumn();
@@ -51,7 +50,6 @@
             saveResourceDialog = new SaveFileDialog();
             toolTip1 = new ToolTip(components);
             menuStrip1.SuspendLayout();
-            audioGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)audioGridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
             splitContainer1.Panel1.SuspendLayout();
@@ -119,28 +117,17 @@
             saveAssetsDialog.DefaultExt = "assets";
             saveAssetsDialog.Filter = "Assets file|*.assets";
             // 
-            // audioGroupBox
-            // 
-            audioGroupBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            audioGroupBox.Controls.Add(audioGridView);
-            audioGroupBox.Location = new Point(12, 31);
-            audioGroupBox.Name = "audioGroupBox";
-            audioGroupBox.Size = new Size(743, 404);
-            audioGroupBox.TabIndex = 1;
-            audioGroupBox.TabStop = false;
-            audioGroupBox.Text = "Select your audio asset";
-            // 
             // audioGridView
             // 
             audioGridView.AllowUserToAddRows = false;
             audioGridView.AllowUserToDeleteRows = false;
             audioGridView.AllowUserToResizeRows = false;
+            audioGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             audioGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             audioGridView.BackgroundColor = SystemColors.Control;
             audioGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             audioGridView.Columns.AddRange(new DataGridViewColumn[] { NameColumn, PathIDColumn, OffsetColumn, SizeColumn, SourceColumn });
-            audioGridView.Dock = DockStyle.Fill;
-            audioGridView.Location = new Point(3, 23);
+            audioGridView.Location = new Point(12, 31);
             audioGridView.MultiSelect = false;
             audioGridView.Name = "audioGridView";
             audioGridView.ReadOnly = true;
@@ -148,7 +135,7 @@
             audioGridView.RowHeadersWidth = 51;
             audioGridView.RowTemplate.Height = 29;
             audioGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            audioGridView.Size = new Size(737, 378);
+            audioGridView.Size = new Size(743, 404);
             audioGridView.TabIndex = 2;
             // 
             // NameColumn
@@ -236,17 +223,16 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(767, 507);
+            Controls.Add(audioGridView);
             Controls.Add(splitContainer1);
-            Controls.Add(audioGroupBox);
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "MainForm";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "AudioClipAssetReplacer v{0}";
+            Text = "AudioClipAssetReplacer";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
-            audioGroupBox.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)audioGridView).EndInit();
             splitContainer1.Panel1.ResumeLayout(false);
             splitContainer1.Panel2.ResumeLayout(false);
@@ -267,7 +253,6 @@
         private OpenFileDialog openAssetsDialog;
         private OpenFileDialog openFsbDialog;
         private SaveFileDialog saveAssetsDialog;
-        private GroupBox audioGroupBox;
         private DataGridView audioGridView;
         private SplitContainer splitContainer1;
         private Button replaceButton;

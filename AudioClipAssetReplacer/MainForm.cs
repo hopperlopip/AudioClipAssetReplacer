@@ -23,7 +23,6 @@ namespace AudioClipAssetReplacer
         public MainForm()
         {
             InitializeComponent();
-            Text = string.Format(Text, Application.ProductVersion);
             initFormTitle = Text;
             FormClosing += MainForm_FormClosing;
             toolTip1.SetToolTip(linkButton, "You can link your audio asset to your FSB file.\r\nRemember, FSB file must be contained inside a folder where your assets file located because\r\nit sets not an absolute path to your FSB, it sets an relative path.\r\n");
@@ -221,14 +220,13 @@ namespace AudioClipAssetReplacer
 
         private void SaveAssetsFile(AssetsFile assetsFile, string filePath)
         {
-            MemoryStream memoryStream = new MemoryStream();
-            using AssetsFileWriter writer = new AssetsFileWriter(memoryStream);
-            assetsFile.Write(writer, 0L);
-            assetsFile.Close();
-            using (FileStream fs = File.OpenWrite(filePath))
+            string tmpAssetsFile = $"{filePath}.tmp";
+            using (AssetsFileWriter writer = new AssetsFileWriter(tmpAssetsFile))
             {
-                memoryStream.WriteTo(fs);
+                assetsFile.Write(writer);
             }
+            assetsFile.Close();
+            File.Move(tmpAssetsFile, filePath, true);
             assetsFile.Read(new AssetsFileReader(filePath));
         }
 
@@ -303,6 +301,7 @@ namespace AudioClipAssetReplacer
                 File.WriteAllBytes(saveResourceDialog.FileName, resourceFile);
             }
             SaveAssetsFile(assetsFile, saveAssetsDialog.FileName);
+            assetsPath = saveAssetsDialog.FileName;
             SetModifiedState(ModifiedState.Saved);
         }
 
