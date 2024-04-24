@@ -135,7 +135,7 @@
             audioGridView.RowHeadersWidth = 51;
             audioGridView.RowTemplate.Height = 29;
             audioGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            audioGridView.Size = new Size(743, 404);
+            audioGridView.Size = new Size(743, 400);
             audioGridView.TabIndex = 2;
             // 
             // NameColumn
@@ -177,7 +177,7 @@
             // 
             splitContainer1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             splitContainer1.IsSplitterFixed = true;
-            splitContainer1.Location = new Point(12, 441);
+            splitContainer1.Location = new Point(12, 437);
             splitContainer1.Name = "splitContainer1";
             // 
             // splitContainer1.Panel1
@@ -222,7 +222,7 @@
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(767, 507);
+            ClientSize = new Size(767, 503);
             Controls.Add(audioGridView);
             Controls.Add(splitContainer1);
             Controls.Add(menuStrip1);

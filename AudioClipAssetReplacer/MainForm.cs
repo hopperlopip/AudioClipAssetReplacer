@@ -19,6 +19,7 @@ namespace AudioClipAssetReplacer
         byte[] fsbFileData;
         string resourcePath;
         byte[] resourceFile;
+        List<AudioClipAssetInfo> audioClips = new();
 
         public MainForm()
         {
@@ -94,11 +95,12 @@ namespace AudioClipAssetReplacer
                     AssetFileInfo audioInfo = audioInfos[i];
                     AssetTypeValueField audioBase = manager.GetBaseField(fileInstance, audioInfo);
                     audioGridView.Rows.Add();
-                    audioGridView.Rows[i].Cells[0].Value = audioBase["m_Name"].AsString;
-                    audioGridView.Rows[i].Cells[1].Value = audioInfo.PathId;
-                    audioGridView.Rows[i].Cells[2].Value = audioBase["m_Resource.m_Offset"].AsULong;
-                    audioGridView.Rows[i].Cells[3].Value = audioBase["m_Resource.m_Size"].AsULong;
-                    audioGridView.Rows[i].Cells[4].Value = audioBase["m_Resource.m_Source"].AsString;
+                    audioClips.Add(new AudioClipAssetInfo());
+                    audioGridView.Rows[i].Cells[0].Value = audioClips[i].name = audioBase["m_Name"].AsString;
+                    audioGridView.Rows[i].Cells[1].Value = audioClips[i].pathId = audioInfo.PathId;
+                    audioGridView.Rows[i].Cells[2].Value = audioClips[i].audioOffset = audioBase["m_Resource.m_Offset"].AsULong;
+                    audioGridView.Rows[i].Cells[3].Value = audioClips[i].dataSize = audioBase["m_Resource.m_Size"].AsULong;
+                    audioGridView.Rows[i].Cells[4].Value = audioClips[i].resourceName = audioBase["m_Resource.m_Source"].AsString;
                 }
                 if (audioGridView.Rows.Count != 0)
                 {
@@ -157,7 +159,7 @@ namespace AudioClipAssetReplacer
             audioInfo.SetNewData(audioBase);
         }
 
-        private void ReplaceFsbData(long pathID)
+        private void ReplaceFsbData(long pathID, List<AudioClipAssetInfo> audioClips)
         {
             AssetTypeValueField audioBase = manager.GetBaseField(fileInstance, pathID);
             AssetFileInfo audioInfo = assetsFile.GetAssetInfo(pathID);
@@ -191,12 +193,12 @@ namespace AudioClipAssetReplacer
             resourceFile = memoryStream.ToArray();
             audioBase["m_Resource.m_Size"].AsULong = Convert.ToUInt64(fsbFileData.LongLength);
             audioInfo.SetNewData(audioBase);
-            for (int i = 0; i < audioGridView.Rows.Count; i++)
+            for (int i = 0; i < audioClips.Count; i++)
             {
-                ulong currentAudioOffset = Convert.ToUInt64(audioGridView.Rows[i].Cells[2].Value);
+                ulong currentAudioOffset = audioClips[i].audioOffset;
                 if (currentAudioOffset > audioOffset)
                 {
-                    long currentPathID = Convert.ToInt64(audioGridView.Rows[i].Cells[1].Value);
+                    long currentPathID = audioClips[i].pathId;
                     AssetTypeValueField currentAudioBase = manager.GetBaseField(fileInstance, currentPathID);
                     AssetFileInfo currentAudioInfo = assetsFile.GetAssetInfo(currentPathID);
                     if (currentAudioBase["m_Resource.m_Source"].AsString != resourceName)
@@ -241,7 +243,7 @@ namespace AudioClipAssetReplacer
             {
                 fsbFileData = File.ReadAllBytes(openFsbDialog.FileName);
                 long pathID = Convert.ToInt64(audioGridView.SelectedRows[0].Cells[1].Value);
-                ReplaceFsbData(pathID);
+                ReplaceFsbData(pathID, audioClips);
                 UpdateAssetsFileList();
                 SetModifiedState(ModifiedState.Modified);
             }
