@@ -1,0 +1,3 @@
+[submodule "WavToFsb"]
+	path = WavToFsb
+	url = https://github.com/AssetRipper/WavToFsb.git
