@@ -32,7 +32,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="FmodLibraries\" />
+    <None Update="FmodLibraries\fmod.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="FmodLibraries\fmodL.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

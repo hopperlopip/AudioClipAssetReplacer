@@ -1,6 +1,0 @@
-[submodule "WavToFsb"]
-	path = WavToFsb
-	url = https://github.com/AssetRipper/WavToFsb.git
-[submodule "AudioClipAssetReplacer/WavToFsb"]
-	path = AudioClipAssetReplacer/WavToFsb
-	url = https://github.com/AssetRipper/WavToFsb.git
