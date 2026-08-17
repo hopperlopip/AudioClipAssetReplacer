@@ -11,5 +11,5 @@ Unity tool that allows you replace AudioClip without compile it into Unity Edito
 - [NAudio](https://github.com/naudio/NAudio) for audio playing.
 - [NAudio.Vorbis](https://github.com/naudio/Vorbis) for OGG(Vorbis) audio support.
 
-This project contains wrapping code and the native libraries for FMOD 1.10.20 (FMOD Studio, copyright © Firelight Technologies Pty, Ltd., 1994-2016.).<br>
+This project contains the native libraries for FMOD 1.10.20 (FMOD Studio, copyright © Firelight Technologies Pty, Ltd., 1994-2016.).<br>
 This project is not affiliated with Unity Technologies or Firelight Technologies.
