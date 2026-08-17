@@ -3,7 +3,7 @@ Unity tool that allows you replace AudioClip without compile it into Unity Edito
 
 <img width="690" height="703" alt="image" src="https://github.com/user-attachments/assets/8409d5a4-9e2e-4017-bc13-5ce7e96d9170" />
 
-Used libraries:
+## Used libraries:
 - [AssetsTools.NET](https://github.com/nesrak1/AssetsTools.NET/tree/main) for assets file editing.
 - [AssetRipper.FSBank.V1](https://www.nuget.org/packages/AssetRipper.FSBank.V1) for converting audio files to the [FSB format](https://www.fmod.com).
 - [AssetRipper.FMOD.V1](https://www.nuget.org/packages/AssetRipper.FMOD.V1) for converting audio files to the [FSB format](https://www.fmod.com).
