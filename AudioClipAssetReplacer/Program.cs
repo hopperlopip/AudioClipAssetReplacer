@@ -1,5 +1,3 @@
-using FmodAudio;
-
 namespace AudioClipAssetReplacer
 {
     internal static class Program
@@ -10,7 +8,6 @@ namespace AudioClipAssetReplacer
         [STAThread]
         static void Main()
         {
-            Fmod.SetLibraryLocation(@".\FmodLibraries");
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();

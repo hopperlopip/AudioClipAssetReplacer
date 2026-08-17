@@ -27,11 +27,21 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AssetRipper.FMOD.V1" Version="0.1.0" />
+    <PackageReference Include="AssetRipper.FSBank.V1" Version="0.1.0.1" />
     <PackageReference Include="AssetsTools.NET" Version="3.0.0" />
+    <PackageReference Include="Fmod5Sharp" Version="3.1.0" />
+    <PackageReference Include="NAudio" Version="2.3.0" />
+    <PackageReference Include="NAudio.Core" Version="2.3.0" />
+    <PackageReference Include="NAudio.Extras" Version="2.3.0" />
+    <PackageReference Include="NAudio.Vorbis" Version="1.5.0" />
+    <PackageReference Include="NAudio.Wasapi" Version="2.3.0" />
+    <PackageReference Include="NAudio.WinForms" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>
+    <None Update="classdata.tpk">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="FmodLibraries\fmod.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
